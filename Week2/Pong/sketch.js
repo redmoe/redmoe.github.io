@@ -6,29 +6,12 @@ var border = 20;
 var score1 = 0;
 var score2 = 0;
 
-function Collider () {
-	this.pos;
-	this.vel;
-	this.height;
-	this.width;
-
-	this.update = function() {
-
-	}
-	this.display = function() {
-
-	}
-	this.collided = function(ball) {
-	this.collided = function(ball) {
-
-	}
-}
 function Ball() {
 	this.x = width / 2;
 	this.y = height / 2;
 	this.speed = 3;
 	this.angle = 0;
-	this.diam = border/1.5;
+	this.diam = 15;
 
 	this.Reset = function() {
 		this.x = width / 2;
@@ -82,6 +65,7 @@ function Paddle(tempX, angTemp) {
 	}
 }
 
+
 function setup() {
 	background(255, 0, 0);
 	createCanvas(600, 400);
@@ -89,7 +73,6 @@ function setup() {
 	paddle1 = new Paddle(width - border, PI);
 	ball = new Ball();
 }
-
 var ball;
 
 function keyPressed() {
@@ -108,12 +91,14 @@ function keyPressed() {
 }
 
 function keyReleased() {
+	/// if (key==CODED) {
 	if (keyCode == UP_ARROW) {
 		paddle1.up = false;
 	}
 	if (keyCode == DOWN_ARROW) {
 		paddle1.down = false;
 	}
+	//  }
 	if (key == 'W' || key == 'w') {
 		paddle2.up = false;
 	}
@@ -126,6 +111,9 @@ function draw() {
 	background('#ed225d');
 	fill(255);
 	noStroke();
+	for (var i = 0; i < 10; i++) {
+		rect(width / 2 - (border / 4), i * height / 9 - 5, border / 2, 10);
+	}
 		textAlign(CENTER, CENTER);
 	if (score1 > 9) {
 		textSize(40);
@@ -136,12 +124,9 @@ function draw() {
 		text("PLAYER 2 WINS!", width / 2, height / 2);	
 	}
 	else {
-		for (var i = 0; i < 10; i++) {
-			rect(width / 2 - (border / 4), i * height / 9 - 5, border / 2, 10);
-		}		
-		paddle1.Move();
-		paddle2.Move();
-		ball.Move();
+	paddle1.Move();
+	paddle2.Move();
+	ball.Move();
 	}
 	noStroke();
 	rect(0, 0, width, border);
