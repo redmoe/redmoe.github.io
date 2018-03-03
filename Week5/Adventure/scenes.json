@@ -1,0 +1,45 @@
+{
+  "scenes": [
+    {
+      "sceneText": "All of you fennel has run off again, go find it in the many rooms of ludicrously close together biomes!",
+      "nextScenes": [1],
+      "optionName": "Head home.",
+            "hasFennel": true
+
+    },
+    {
+      "sceneText": "The bog of unquenchable of thirst. It has some fennel and will give it to you.",
+      "nextScenes": [2, 3],
+      "optionName":"Enter the bog.",
+      "hasFennel": true
+    },
+    {
+      "sceneText": "You have now entered the desert of desserts. Sticky icing layers the floor.",
+      "nextScenes": [3, 4],
+      "optionName":"Enter the desert.",
+            "hasFennel": true
+
+    },
+    {
+      "sceneText": "The sea of c's is filled with all forms of life that start with c, such as cuddlefish, cameleons, camels, capybaras, and coalas.",
+      "nextScenes": [4, 0],
+      "optionName":"Swim to the sea.",
+            "hasFennel": true
+
+    },
+    {
+      "sceneText": "You are now in space. Drifting by you is two alternative-punk aliens, someone's cover letter, and a British discount store. Space is too weird.",
+      "nextScenes": [0, 1, 2, 3],
+      "optionName":"Blast off into space.",
+            "hasFennel": true
+
+    },
+    {
+      "sceneText": "Congratulations! You found all of your fennel! Now where'd did I put all the millet...",
+      "nextScenes": [],
+      "optionName":"Win Screen.",
+      "hasFennel": false
+
+    }    
+  ]
+}

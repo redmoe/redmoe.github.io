@@ -1,7 +1,7 @@
 var positions = [];
 var brushSize = 10;
 function setup() {
-	createCanvas(800, 800);
+	createCanvas(512, 512);
 }
 
 function parseJson(data) {
@@ -9,10 +9,13 @@ function parseJson(data) {
 		positions.push(new PaintMark(createVector(data[i].x, data[i].y), color(data[i].c,0,0), data[i].s));
 	}
 }
-
+var hide = false;
 function draw() {
   background(0);
-
+  fill(255,0,0);
+  if (hide == false) {
+  	text("Tap D: Increase Brush Size\nTap A: Decrease Brush Size\nSpace: Save\nL: Load\nH: Hide this text",20,20);
+  }
   for (var i = 0; i < positions.length; i++) {
   	positions[i].display();
   }
@@ -42,6 +45,9 @@ function keyPressed() {
 	if (key==='A') {
 		brushSize--;
 	}
+	if (key==='H') {
+		hide = !hide;
+	}	
 }
 
 function mouseDragged() {
