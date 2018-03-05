@@ -40,7 +40,7 @@ function Scene(sceneText, nextScenes, optionName, hasFennel) {
   this.optionName = optionName;
   this.hasFennel = hasFennel;
   this.display = function() {
-    fill(0);
+    fill(255);
     textSize(16);
     var fennelText = "";
     if (hasFennel == true) {
