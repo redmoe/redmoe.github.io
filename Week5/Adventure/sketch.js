@@ -18,7 +18,7 @@ function draw() {
   background(127,0,0);
   scenes[currentScene].display();
 
-  fill(0);
+   fill(255);;
   textSize(16);
   textAlign(CENTER);
   text("Press the corresponding number key to pick an option", width/2, 750);
