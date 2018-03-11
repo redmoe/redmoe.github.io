@@ -1,0 +1,9 @@
+
+I want to create a strategic turn-based 2 player game using Sokoban-like gameplay (where you push crates into place on a grid) with a bit of chess.	
+
+My first reference the upcoming game Baba is You, where the player is able to move around the rules of the game represent as blocks of texts. It really fascinating because you messing with the rules of the game, something rarely seen in digital games. The game is basically composed of objects, nouns, and verbs. If you push two nouns parallel of a verb, it invokes it's grammer onto the world. So for example, the "player is sheep" can be changed to the "player is rock" making the player in control of all rocks. Everything in the game is on a grid and the player's only abilities are moving in four directions. Objects can become solid with the "is wall" modifier, and can be pushed if "is push". Overall I think the basic elements of Baba is You is perfect for what I am going for, but I want to come up with a unique core mechanic for my game.
+
+https://hempuli.itch.io/baba-is-you
+
+I also want to analyze the recently released Into the Breach, which shares much with the puzzle genre of pushing. In it you control mechs whose attacks can deal damage, but also are able to push the aliens you fight into other things creating chain reactions from their bumping into other things. The game is played on an 8 by 8 grid, and on each level there is some terrain like forests which can be walked over or mountains which are immovable blockers, cities you defend to win, and the game actors of the aliens and your three mech. Due to the constrained space the player is able to keep track of every square on the map, allowing them to focus on the movement of units similar to how a chess player is able to see their pieces unique moves. I am seriously considering pivoting towards a more strategic style of game and Into the Breach really inspired my thought process while sketching this concept.
+
