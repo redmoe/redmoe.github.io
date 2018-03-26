@@ -35,10 +35,8 @@
 		blockImages.push(loadImage("assets/brick.png")); //3
 		blockImages.push(loadImage("assets/boxPlayer.png")); //4 
 		blockImages.push(loadImage("assets/barrelPlayer.png")); //5
-				//blockImages.push(loadImage("assets/board.png")); //6
 		blockImages.push(loadImage("assets/skull.png")); //6
-
-		myFont = loadFont('assets/font.ttf');
+		myFont = loadFont('assets/3by3.ttf');
 		createCanvas(640,640);
 		colors = [color ('#fff1e8'),color ('#29adff'),color('#ff004d'),color('#5f574f'),color('#000000')];
 		blockSize = height/boardSize;
@@ -59,10 +57,11 @@
 		background('#ffccaa');
 		textFont(myFont);
 		tint(255,255);
+		textSize(blockSize/2);
+		textAlign(CENTER, CENTER);
+		noSmooth();
 		var millisecond = millis();
 		imageMode(CORNER);
-		//image(blockImages[6],blockSize,blockSize,8*blockSize,8*blockSize);
-
 		for (var y = 0; y < 2; y++) {
  			for(var x = 0; x < boardSize; x++) {
                 image(blockImages[3],x*blockSize,y*(height-blockSize),blockSize,blockSize);
@@ -71,17 +70,18 @@
 		if (timer < millisecond) {
 			falseTrue = !falseTrue;
 			timer += 128;
-
 		}
 		bounceSize = 4 * Math.sin(pulseSize ) + blockSize;
  		pulseSize+=0.1;
- 		CheckScene (currentState);
+ 		imageMode(CENTER);
 		for (var i = 0; i < visuals.length; i++) {
 			visuals[i].Display();
 		}		
 		for (var i = 0; i < blockArray.length; i++) {
 			blockArray[i].Display();
 		}	
+		 		CheckScene (currentState);
+
 	}
 	function ChangeScene (whichScene) {
 		currentState = whichScene;
@@ -105,22 +105,26 @@
 		}
 	}
 	function CheckScene (whichScene) {
-		textAlign(CENTER, CENTER);
-		textSize(blockSize/2);
 		var currentText = levelName;
 		var bottomText = levelName;
 		switch (whichScene) {
 			case sceneState.Player1Turn:
 				newColor = colors[1];
-				currentText = "BOXY'S TURN!";
+				currentText = "BOXY'S TURN";
+				if (levelIndex == 2) {
+					bottomText = "WASD TO MOVE"
+				}
 		    break;	
 			case sceneState.Player2Turn:
 				newColor = colors[2];
-				currentText = "BARLEY'S TURN!";
+				currentText = "BARRELY'S TURN";
+				if (levelIndex == 2) {
+					bottomText = "ARROW KEYS TO MOVE"
+				}
 		    break;
 			case sceneState.PlayerWin:
 				if (currentWinner) {
-					newColor = colors[2];
+					newColor = colors[1];
 					currentText = "BOXES WINS";
 				}
 				else {
@@ -139,11 +143,15 @@
 		}
 		currentColor =  lerpColor(currentColor,newColor,.5);
 		if (levelIndex == 1) {
-				fill(currentColor);
-				rect(blockSize*3,blockSize*4,blockSize*4,blockSize*2);
-				fill(colors[0]);
-				text("CRATES\nVS.\nBARRELS",blockSize*3,blockSize*3.4,blockSize*4,blockSize*2);
-		  		bottomText = "PRESS SPACE TO START";
+			fill(currentColor);
+			rect(blockSize*2.5,blockSize*3.5,blockSize*5,blockSize*3);
+			fill(colors[0]);
+			textAlign(CENTER,CENTER);
+			text("BOXES\nVS\nBARRELS:\nCRATEGEDDON",width/2,height/2);
+		  	bottomText = "PRESS SPACE TO START";
+		}
+		else if (levelIndex == 2) {
+	
 		}
 		fill(currentColor);
 		rect(blockSize/4,blockSize/4,width-blockSize/2,blockSize/2);
@@ -151,29 +159,26 @@
 		fill(colors[0]);
 		text(currentText, width/2,blockSize/2);	
 		text(bottomText, width/2,height-blockSize/2);
-		textAlign(LEFT,CENTER);
+		textAlign(LEFT);
 		text(kings[0].score,blockSize/2,blockSize/2);
 		textAlign(RIGHT);
 		text(kings[1].score,width-blockSize/2,blockSize/2);
 	}
-	function Level (blocks) {
-		this.blocks = blocks;
-	}
 	function King (index,faction) {
-		this.blockIndex = index;
+		//this.blockIndex = index;
 		this.block = blockArray[index];
 		this.faction = faction;
 		this.score = 0;
 		this.FindKing = function () {
-			this.block = blockArray[this.blockIndex];
 			if (this.block != null) {
 				if (this.block.image === blockImages[faction+3] && this.block.faction === this.faction) {
+					console.log(this.block.position+"stil decenet");
 					return;
 				}
 			}
 			for (var i = 0; i < blockArray.length; i++) {
 				if (blockArray[i].faction === this.faction) {
-						this.blockIndex = i;
+					console.log(this.faction+"for try");
 						this.block = blockArray[i];
 						blockArray[i].image = blockImages[faction+3];
 						return;
@@ -192,24 +197,24 @@
 	}
 	function Skull (position,col) {
 		this.position = position;
-		//this.imgBlink = [color,16];
 		this.curCole = col;
 		this.alph = 255;
 		this.blink = 16;
 
 		this.Display = function () {
-			console.log("FFF");
-			imageMode(CENTER);
-			tint(this.curCole.levels[0],this.curCole.levels[1],this.curCole.levels[2],this.alph);
 	    	if (this.blink > 0) {
 	    		this.blink--;
 	    	}
-	    	else if (falseTrue) {
+	    	else {
 	    		this.alph = lerp(this.alph,0,.1);
+	    	}
+	    	if (falseTrue) {
 			    tint(255,this.alph);
 	    	}
+	    	else {
+				tint(this.curCole.levels[0],this.curCole.levels[1],this.curCole.levels[2],this.alph);
+	    	}
 	    	image(blockImages[6],this.position.x+(blockSize/2),this.position.y+(blockSize/2),blockSize*(this.alph/255),blockSize*(this.alph/255));
-		
 		    if (this.alph  == 0)  {
 				for (var f = 0; f < visuals.length; f++) {
 					if (visuals[f] == this) {
@@ -234,11 +239,9 @@
 				this.imgBlink[1]--;
 			}
 			tint(curCol,255);
-			noSmooth();
 			if (currentState == this.faction && (this.image == blockImages[4] || this.image == blockImages[5])) {
 			   imgSize = bounceSize;
 			}
-			imageMode(CENTER);
  			image(this.image,this.position.x+(blockSize/2),this.position.y+(blockSize/2),imgSize,imgSize);
 		}
 		this.UpdateFaction = function (newFac) {
@@ -278,6 +281,7 @@
 						if (otherBlock.image == blockImages[4] || otherBlock.image == blockImages[5]) {
 							visuals.push(new Skull(otherBlock.position,colors[otherBlock.faction]));
 							blockArray.splice(colCheck[0],1);
+							kings[otherBlock.faction-1].block = null;
 						}
 						else if (otherBlock.faction != 0) {
 							otherBlock.UpdateFaction(0);
@@ -286,8 +290,6 @@
 						else {
 							otherBlock.UpdateFaction(this.faction);
 						}
-						// kings[0].FindKing();
-				  //    	kings[1].FindKing();
 				     	if (this.faction == 1) {
 						    ChangeScene(sceneState.Player2Turn);
 						}
@@ -307,7 +309,6 @@
 			return false;
 		}		
 	}
-
 	function keyPressed () {
 		switch (currentState) {
 		 	case sceneState.Player1Turn:
@@ -394,6 +395,9 @@
 		}
 		else if (colCheck[0] !== false){
  			blockArray.splice(colCheck[0],1);
+ 			if (colCheck[0].image == blockImages[4] || colCheck[0].image == blockImages[5]) {
+ 				kings[colCheck[0].faction-1].block = null;
+ 			}			 			
 		}
 		kings[0].FindKing();
 		kings[1].FindKing();
@@ -442,9 +446,7 @@
 			 }
 			kings[0].block = blockArray[0];
 			kings[1].block = blockArray[0];
-			// kings[0].FindKing();
-			// kings[1].FindKing();
-				ChangeScene(sceneState.Player1Turn);
+			ChangeScene(sceneState.Player1Turn);
 			levelIndex++;
 			if (levelIndex > levels.length-1) {
 			 	levelIndex = 0;
