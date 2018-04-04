@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebVr</title>
+    <meta name="viewport" wi  dth=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
+<!--     <style> 
+      body {
+        padding: 0; 
+        margin: 0; 
+        background: #5f574f; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      } 
+    </style> -->    
+    <script src="p5.min.js"></script>
+    <script src="sketch.js"></script>
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.0.2/dist/aframe-physics-system.min.js"></script>
+    <a-asset-item id="sce" src="/assets/scene.gltf"></a-asset-item>
+  </head>
+  <body>
+    <a-scene >
+  <a-sky color="#6EBAA7"></a-sky>
+  <a-entity gltf-model="#sce"></a-entity>
+        <a-box color="#D2B48C" rotation="0 0 0" position="2 0 0" scale="1 .5f 1"></a-box>
+        <a-entity>  
+         <a-entity dynamic-body geometry="primitive:box; width:1; height:1; depth:1;" material="color:red;" position="2 0.5 -3" rotation="0 45 0"></a-entity>
+           <a-animation attribute="rotation"
+               dur="10000"
+               fill="forwards"
+               to="0 360 0"
+               repeat="indefinite"></a-animation>
+        </a-entity>
+    </a-scene>
+  </body>
+</html>
