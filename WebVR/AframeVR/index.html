@@ -2,42 +2,38 @@
 <html>
   <head>
     <title>WebVr</title>
-    <meta name="viewport" wi  dth=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
-<!--     <style> 
-      body {
-        padding: 0; 
-        margin: 0; 
-        background: #5f574f; 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      } 
-    </style> -->    
-<!--     <script src="p5.min.js"></script>
-    <script src="sketch.js"></script> -->
+    <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
     <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.0.2/dist/aframe-physics-system.min.js"></script>
-    <a-asset-item id="sce" src="/assets/land/scene.gltf"></a-asset-item>
-    <a-asset-item id="bar" src="/assets/bard/scene.gltf"></a-asset-item>
-    <a-asset-item id="buc" src="/assets/bucket/scene.gltf"></a-asset-item>
+    <script src="https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"></script>
+      <a-asset id="sce" src="/assets/land/scene.gltf"></a-asset>
 
   </head>
   <body>
     <a-scene >
-  <a-sky color="#6EBAA7"></a-sky>
-  <a-entity gltf-model="#sce"></a-entity>
-    <a-entity gltf-model="#bar"></a-entity>
-        <a-entity gltf-model="#buc"></a-entity>
-
-        <a-box color="#D2B48C" rotation="0 0 0" position="2 0 0" scale="1 .5f 1"></a-box>
-        <a-entity>  
-         <a-entity dynamic-body geometry="primitive:box; width:1; height:1; depth:1;" material="color:red;" position="2 0.5 -3" rotation="0 45 0"></a-entity>
-           <a-animation attribute="rotation"
-               dur="10000"
-               fill="forwards"
-               to="0 360 0"
-               repeat="indefinite"></a-animation>
-        </a-entity>
+      <a-asset-item id="bar" src="/assets/bard/scene.gltf"></a-asset-item>
+      <a-asset-item id="buc" src="/assets/bucket/scene.gltf"></a-asset-item>
+      <a-sky color="#6EBAA7"></a-sky>
+      <a-entity gltf-model="#sce"></a-entity>
+      <a-entity gltf-model="#bar"></a-entity>
+      <a-entity gltf-model="#buc"></a-entity>
+      <a-box dynamic-body color="#D2B48C" position="2 0 0" scale="1 .5f 1"></a-box>
+      <a-entity>  
+        <a-entity  geometry="primitive:box; width:1; height:1; depth:1;" material="color:red;" position="2 0.5 -3" rotation="0 45 0" event-set__makevisible="_event: mouseenter; visible: true"></a-entity>
+        <a-animation attribute="rotation"
+          dur="10000"
+          fill="forwards"
+          to="0 360 0"
+          repeat="indefinite">       
+        </a-animation>
+      </a-entity>
+      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"
+             event-set__enter="_event: mouseenter; color: #8FF7FF"
+             event-set__leave="_event: mouseleave; color: #4CC3D9"></a-box>      
+      <a-camera>
+        <a-cursor>
+        </a-cursor>
+      </a-camera>      
     </a-scene>
   </body>
 </html>
