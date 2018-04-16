@@ -14,11 +14,15 @@
         <a-asset-item id="sce" src="assets/land/scene.gltf"></a-asset-item>
         <a-asset-item id="bar" src="assets/bard/scene.gltf"></a-asset-item>
         <a-asset-item id="buc" src="assets/bucket/scene.gltf"></a-asset-item>
+        <a-asset-item id="bus" src="assets/bus/scene.gltf"></a-asset-item>
+
       </a-assets>
       <a-sky color="#6EBAA7"></a-sky>
-      <a-entity gltf-model="#sce"></a-entity>
+<!--       <a-entity gltf-model="#sce"></a-entity>
       <a-entity gltf-model="#bar"></a-entity>
-      <a-entity gltf-model="#buc"></a-entity>
+      <a-entity gltf-model="#buc"></a-entity> -->
+            <a-entity gltf-model="#bus"></a-entity>
+
       <a-box dynamic-body color="#D2B48C" position="2 0 0" scale="1 .5f 1"></a-box>
       <a-entity>  
         <a-entity  geometry="primitive:box; width:1; height:1; depth:1;" material="color:red;" position="2 0.5 -3" rotation="0 45 0" event-set__makevisible="_event: mouseenter; visible: true"></a-entity>
