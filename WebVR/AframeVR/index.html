@@ -6,6 +6,7 @@ ySe;ectpr)<!DOCTYPE html>
     <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.0.2/dist/aframe-physics-system.min.js"></script>
     <script src="https://unpkg.com/aframe-event-set-component@4.1.1/dist/aframe-event-set-component.min.js"></script>
+    <script src="sketch.js"></script>
 
   </head>
   <body>
@@ -17,10 +18,14 @@ ySe;ectpr)<!DOCTYPE html>
         <a-asset-item id="bus" src="assets/bus/scene.gltf"></a-asset-item>
 
       </a-assets>
-      <a-sky color="#6EBAA7"></a-sky>
-<!--       <a-entity gltf-model="#sce"></a-entity>
+                  <a-entity bus gltf-model="#bus" scale = "100 100 100"></a-entity>
+
+
+
+<!--       <a-sky color="#6EBAA7"></a-sky>
+      <a-entity gltf-model="#sce"></a-entity>
       <a-entity gltf-model="#bar"></a-entity>
-      <a-entity gltf-model="#buc"></a-entity> -->
+      <a-entity gltf-model="#buc"></a-entity>
             <a-entity gltf-model="#bus"></a-entity>
 
       <a-box dynamic-body color="#D2B48C" position="2 0 0" scale="1 .5f 1"></a-box>
@@ -32,14 +37,15 @@ ySe;ectpr)<!DOCTYPE html>
           to="0 360 0"
           repeat="indefinite">       
         </a-animation>
-      </a-entity>
+      </a-entity> -->
       <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"
-             event-set__enter="_event: mouseenter; color: #8FF7FF"
+             event-set__enter="_event: mouseenter; color: #000000"
              event-set__leave="_event: mouseleave; color: #4CC3D9"></a-box>      
       <a-camera>
         <a-cursor>
         </a-cursor>
-      </a-camera>      
+      </a-camera>   
+         
     </a-scene>
   </body>
 </html>

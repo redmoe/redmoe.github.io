@@ -7,7 +7,6 @@ AFRAME.registerComponent('myball', {
     	targetEl.setAttribute('dynamic-body',"mass:100");
 	});
 
-
   }
 });
 
