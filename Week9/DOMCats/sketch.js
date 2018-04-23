@@ -1,6 +1,6 @@
-var data = [];
+//var data = [];
 var buttonElement;
-var selectedDay;
+//var selectedDay;
 // var selectedMonth;
  var text;
 function onButtonPressed() {
@@ -30,3 +30,12 @@ function newDay (data) {
 	  //text = 
 }
 // https://anapioficeandfire.com/api/characters/453
+
+
+var req = new XMLHttpRequest();
+req.open('GET','https://dog.ceo/api/breeds/list/all');
+req.onload = function() {
+	console.log(this.responseText);
+	console.log(JSON.parse(this.responseText));
+}
+req.send();

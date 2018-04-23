@@ -1,0 +1,89 @@
+AFRAME.registerComponent('myball', {
+  init: function () {
+    var targetEl = this.el;  
+    targetEl.setAttribute('color', 'blue');
+
+    targetEl.addEventListener('click', function () {
+    	targetEl.setAttribute('dynamic-body',"mass:100");
+	});
+
+
+  }
+});
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>00_A-Frame_starter</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+  <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.1.1/dist/aframe-physics-system.min.js"></script>
+  <!--build:css css/styles.min.css-->
+  <link rel="stylesheet" href="css/styles.css">
+  <!--endbuild-->
+</head>
+<body><script id="__bs_script__">//<![CDATA[
+    document.write("<script async src='/browser-sync/browser-sync-client.js?v=2.23.6'><\/script>".replace("HOST", location.hostname));
+//]]></script>
+
+  <a-scene physics="debug:true; friction: 0.1; restitution: 0.75">
+
+    <a-assets >
+      <!-- https://poly.google.com/view/ef9Yd09Doxh -->
+      <a-asset-item id="libertystatue-obj" src="objects/libertystatue.obj"></a-asset-item>
+      <a-asset-item id="libertystatue-mtl" src="objects/libertystatue.mtl"></a-asset-item>      
+    </a-assets>
+
+    <a-obj-model dynamic-body="" src="#libertystatue-obj" mtl="#libertystatue-mtl" 
+      position="-1.2 2 -8" 
+      shadow
+      rotation="0 -12 0"
+    ></a-obj-model>
+
+
+    <a-obj-model dynamic-body="" src="#libertystatue-obj" mtl="#libertystatue-mtl" 
+      position="0 2 -8" 
+      shadow
+      rotation="0 -12 0"
+    ></a-obj-model>
+
+    <a-obj-model dynamic-body="" src="#libertystatue-obj" mtl="#libertystatue-mtl" 
+      position="1.2 2 -8" 
+      shadow
+      rotation="0 -12 0"
+    ></a-obj-model>
+
+
+
+
+    <a-sphere myball position="0 3 2.5" radius="0.5" color="#ff2863" shadow></a-sphere>
+
+
+    <a-box static-body 
+      position="0 0.3 0" 
+      width="6" 
+      height="6" 
+      depth="0.25" 
+      rotation="80 0 0" 
+    ></a-box>
+
+    <a-entity static-body
+      text="align:center; value: Hello A-Frame NYC Meetup Guest!"
+      scale="2 2 2"
+      position="0 0.25 -1"></a-entity>   
+
+    <a-plane static-body position="0 0 -4" rotation="-90 0 0" width="10" height="20" color="#19a19d" shadow></a-plane>
+    <a-sky color="#f3f3f3"></a-sky>
+
+    <a-entity position="0 1.6 0" camera look-controls wasd-controls >
+      <a-cursor></a-cursor>
+    </a-entity>
+
+  </a-scene>  
+  <!--build:js js/main.min.js -->
+  <script src="js/main.js"></script>
+  <!-- endbuild -->
+</body>
+</html>
