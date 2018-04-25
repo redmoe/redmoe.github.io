@@ -3,7 +3,7 @@ AFRAME.registerComponent('bus', {
     var targetEl = this.el;  
     //targetEl.setAttribute('color', 'blue');
     //targetEl.setAttribute('scale','1.5f 1.5f 1.5f')
-    console.log(targetEl);
+   // console.log(targetEl);
  //    targetEl.addEventListener('click', function () {
  //    	targetEl.setAttribute('dynamic-body',"mass:100");
 	// });
@@ -17,6 +17,7 @@ for (var i = 0; i < 15; i++) {
     //console.log(i);
 
   AFRAME.registerComponent('bus'+i, {
+     targetEl.setAttribute("material","flatShading:true;");
   init: function () {
   	num++;
     var targetEl = this.el; 
