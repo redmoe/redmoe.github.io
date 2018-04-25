@@ -12,22 +12,25 @@ AFRAME.registerComponent('bus', {
 });
 var num =-1;
 var zOffset = 0;
-for (var i = 0; i < 15; i++) {
+for (var i = 0; i < 16; i++) {
 	  //  console.log("Hey all");
     //console.log(i);
 
   AFRAME.registerComponent('bus'+i, {
-     //targetEl.setAttribute("material","flatShading:true;");
+ //    targetEl.setAttribute("material","flatShading:true;");
+      //    targetEl.material.shading.;
+    //console.log( targetEl.material.shading);
   init: function () {
+            var targetEl = this.el; 
+ targetEl.setAttribute("material","flatShading:true;");
   	num++;
-    var targetEl = this.el; 
-    if (num > 4) {
+    if (num > 3) {
     	num = 0;
-    	zOffset += 4;
+    	zOffset += 5;
 
     } 
     //targetEl.setAttribute('color', 'blue');
-    targetEl.object3D.position.set(num*2.3,-2,zOffset);
+    targetEl.object3D.position.set(num*3,-1,zOffset);
         //targetEl.object3D.scale.set(1,1,1);
 
      console.log(num);
