@@ -10,20 +10,20 @@ AFRAME.registerComponent('reg', {
   }
 });
 
-// AFRAME.registerComponent('modelr', {
-//   init: function () {
-//     var els = this.el;  
-//     var sceneEl = document.querySelector('a-scene');
-//     console.log("CHECK 1");
-// 	els.addEventListener('mouseenter', function () {
-// 			narwhals++;
-// 			var narwhal = sceneEl.querySelector('#modely');
-// 			narwhal.sceneEl.removeChild(narwhal);
-// 			sceneEl.querySelector('#UItext').setAttribute('value',"Narwhal Count:" + narwhals);
-// 			// console.log(narwhals);
-// 	});
-//   }
-// });
+AFRAME.registerComponent('modelr', {
+  init: function () {
+    var els = this.el;  
+    var sceneEl = document.querySelector('a-scene');
+    console.log("CHECK 1");
+	els.addEventListener('mouseenter', function () {
+			narwhals++;
+			var narwhal = sceneEl.querySelector('#modely');
+			narwhal.sceneEl.removeChild(narwhal);
+			sceneEl.querySelector('#UItext').setAttribute('value',"Narwhal Count:" + narwhals);
+			// console.log(narwhals);
+	});
+  }
+});
 
 // var canvas = document.getElementById('mycanvas');
 
