@@ -17,7 +17,7 @@ for (var i = 0; i < 15; i++) {
     //console.log(i);
 
   AFRAME.registerComponent('bus'+i, {
-     targetEl.setAttribute("material","flatShading:true;");
+     //targetEl.setAttribute("material","flatShading:true;");
   init: function () {
   	num++;
     var targetEl = this.el; 
