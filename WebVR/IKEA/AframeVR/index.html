@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebVr</title>
+    <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.0.2/dist/aframe-physics-system.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@4.1.1/dist/aframe-event-set-component.min.js"></script>
+
+  </head>
+  <body>
+    <a-scene >
+      <a-assets>
+        <a-asset-item id="sce" src="assets/land/scene.gltf"></a-asset-item>
+        <a-asset-item id="bar" src="assets/bard/scene.gltf"></a-asset-item>
+        <a-asset-item id="buc" src="assets/bucket/scene.gltf"></a-asset-item>
+        <a-asset-item id="bus" src="assets/bus/scene.gltf"></a-asset-item>
+        <a-asset-item id="chair" src="assets/chair/scene.gltf"></a-asset-item>
+        <a-asset-item id="exportB" src="assets/exports_b/scene.gltf"></a-asset-item>   
+        <a-asset-item id="bookshelf" src="assets/four_modern_bookshelves/scene.gltf"></a-asset-item>   
+         <a-asset-item id="office_chair" src="Big_IKEA_Assets/office_chair/scene.gltf"></a-asset-item>   
+         <a-asset-item id="project_living_room" src="Big_IKEA_Assets/project_living_room/scene.gltf"></a-asset-item>     
+         <a-asset-item id="room_interior_designs" src="Big_IKEA_Assets/room_interior_designs/scene.gltf"></a-asset-item>    
+         <a-asset-item id="smart_fridge" src="Big_IKEA_Assets/smart_fridge/scene.gltf"></a-asset-item>       
+       <a-asset-item id="sofa" src="Big_IKEA_Assets/sofa/scene.gltf"></a-asset-item>
+
+
+       <a-mixin id="text" src="assets/bucket/scene.gltf"></a-mixin>
+       <a-mixin id="model" value="Hello, World!"></a-mixin>                 
+      </a-assets>
+      <a-sky color="#6EBAA7"></a-sky>
+
+<!--       <a-entity gltf-model="#chair"></a-entity>
+      <a-entity gltf-model="#exportB"></a-entity>
+      <a-entity gltf-model="#bookshelf"></a-entity>
+            <a-entity gltf-model="#office_chair"></a-entity>
+            <a-entity gltf-model="#sofa"></a-entity>
+            <a-entity gltf-model="#project_living_room	"></a-entity>
+            <a-entity gltf-model="#room_interior_designs"></a-entity>
+            <a-entity gltf-model="#smart_fridge"></a-entity>            
+      <a-entity gltf-model="#sce"></a-entity>
+      <a-entity gltf-model="#bar"></a-entity>
+      <a-entity gltf-model="#buc"></a-entity>
+             <a-entity gltf-model="#bus"></a-entity>
+       <a-box dynamic-body color="#D2B48C" position="2 0 0" scale="1 .5f 1"></a-box>
+      <a-entity>  
+        <a-entity  geometry="primitive:box; width:1; height:1; depth:1;" material="color:red;" position="2 0.5 -3" rotation="0 45 0" event-set__makevisible="_event: mouseenter; visible: true"></a-entity>
+        <a-animation attribute="rotation"
+          dur="10000"
+          fill="forwards"
+          to="0 360 0"
+          repeat="indefinite">       
+        </a-animation>
+      </a-entity> -->
+<!--       <a-entity text="value: Hello World;"></a-entity> 
+ -->      <a-entity  text="value: Hello World;" gltf-model="#office_chair" position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" 
+             event-set__enter="_event: mouseenter; color: #8FF7FF"
+             event-set__leave="_event: mouseleave; color: #4CC3D9"></a-entity>      
+      <a-camera>
+        <a-cursor>
+        </a-cursor>
+      </a-camera>      
+    </a-scene>
+  </body>
+</html>
