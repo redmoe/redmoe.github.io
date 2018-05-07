@@ -35,6 +35,14 @@ function getNames (data) {
 //   names = data.charcthers;
 //   console.log(names);
 // }
+
+function coroutine(f) {
+    var o = f(); // instantiate the coroutine
+    o.next(); // execute until the first yield
+    return function(x) {
+        o.next(x);
+    }
+}
 function createWalls () {
 
 }
@@ -58,8 +66,20 @@ function createDesks (size) {
   // }
   //0 0- 0
   //0 1
+
   //1 0
   //1 1
+
+          var clock = coroutine(function*() {
+            console.log("HEEE");
+              while (true) {
+                  yield;
+                  console.log('Tick!');
+                  yield;
+                  console.log('Tock!');
+              }
+          });
+          clock(); 
     var player = document.querySelector('#cameraWrapper');
     player.setAttribute("position",{x: (size*3)/2-1.5, y: 1, z: (size*5)/2+1.5});
 
@@ -81,30 +101,45 @@ function createDesks (size) {
   });  
   AFRAME.registerComponent('screen', {
       init: function () {
+        var sizeTimer = null;
+
         var targetEl = this.el; 
         targetEl.addEventListener('mouseleave', function(e) {
+          clearInterval(sizeTimer);
           console.log('mouse up');
+          sizeTimer = null;
+
+          //console.log(sizeTimer);
+
         }); 
-        
         targetEl.addEventListener('mouseenter', function(e) {
+          sizeTimer = setInterval(function(){   
+            moveTowards();
+           // console.log(sizeTimer);
+          }, 1);
           console.log('mouse down');
-          moveTowards ();
+
         });
+
+
         function moveTowards () {
-        //p = a + (b - a) * t
-            var cam = document.querySelector('#camera');
-            var camPos = cam.getAttribute("position");
-                                    console.log( camPos.x);
+          var cam = document.querySelector('#camera');
+          var camPos = cam.getAttribute("position");
+          var tarPos = targetEl.getAttribute("position");
+          var dist = 0.001;
+       //   var dist = Math.sqrt( Math.pow(camPos.x-tarPos.x,2)+ Math.pow(camPos.y-tarPos.y,2)+ Math.pow(camPos.z-tarPos.z,2));
+          console.log(dist);
+         // var dist = ( Math.sqrt( Math.pow(camPos.x-tarPos.x,2)+ Math.pow(camPos.y-tarPos.y,2)+ Math.pow(camPos.z-tarPos.z,2)) - 0) / (1 - 0);
+          if (dist < 0 || dist ==0) {
+           return;
+          }
+          camPos.x = camPos.x+(tarPos.x -camPos.x) * dist;
+          camPos.y = camPos.y+(tarPos.y -camPos.y) * dist;
+          camPos.z = camPos.z+(tarPos.z -camPos.z) * dist;
+        //  console.log(Math.sqrt( Math.pow(camPos.x-tarPos.x,2)+ Math.pow(camPos.y-tarPos.y,2)+ Math.pow(camPos.z-tarPos.z,2)));
 
-            camPos.x = camPos.x+(targetEl.getAttribute("position").x -camPos.x)* .1;
-                                                console.log( camPos.x);
-
-            cam.setAttribute("position",camPos);
-                                                            console.log(cam.getAttribute("position").x);
-
-
-      }
-
+          cam.setAttribute("position",camPos);
+        }
       }
   }); 
   for (var i = 0; i < size * size; i++) {
@@ -121,7 +156,7 @@ function createDesks (size) {
     AFRAME.registerComponent('modely'+i, {
       init: function () {
         var targetEl = this.el; 
-        targetEl.setAttribute("material","flatShading:true;");
+        // targetEl.setAttribute("material","flatShading:true;");
     }
   });
 }}
