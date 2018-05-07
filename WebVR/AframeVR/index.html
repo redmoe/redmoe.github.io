@@ -6,68 +6,32 @@
     <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.0.2/dist/aframe-physics-system.min.js"></script>
     <script src="https://unpkg.com/aframe-event-set-component@4.1.1/dist/aframe-event-set-component.min.js"></script>
-    <script src="sketch.js"></script>
+          <script src="sketch.js"></script>
+
   </head>
   <body>
-    <a-scene >
+    <a-scene>
       <a-assets>
-        <a-asset-item id="sce" src="assets/land/scene.gltf"></a-asset-item>
-        <a-asset-item id="bar" src="assets/bard/scene.gltf"></a-asset-item>
-        <a-asset-item id="buc" src="assets/bucket/scene.gltf"></a-asset-item>
-        <a-asset-item id="bus" src="assets/bus/scene.gltf"></a-asset-item>
-     <!--    <a-asset-item id="desk" src="assets/desk/scene.gltf"></a-asset-item> -->
         <a-asset-item id="desk" src="assets/simpDesk/scene.gltf"></a-asset-item>
         <img id="my-image" src="assets/picture.png">
       </a-assets>
-<!--       <a-entity bus gltf-model="#desk" position="0 -2 0" scale= "100 4 4"></a-entity>
- -->     
-  <a-entity bus0 gltf-model="#desk"></a-entity>
-  <a-entity bus1 gltf-model="#desk"></a-entity>
-  <a-entity bus2 gltf-model="#desk"></a-entity>
-  <a-entity bus3 gltf-model="#desk"></a-entity>
-  <a-entity bus4 gltf-model="#desk"></a-entity>
-  <a-entity bus5 gltf-model="#desk"></a-entity>
-  <a-entity bus6 gltf-model="#desk"></a-entity>
-  <a-entity bus7 gltf-model="#desk"></a-entity>
-  <a-entity bus8 gltf-model="#desk"></a-entity>
-  <a-entity bus9 gltf-model="#desk"></a-entity>
-  <a-entity bus10 gltf-model="#desk"></a-entity>
-  <a-entity bus11 gltf-model="#desk"></a-entity>
-  <a-entity bus12 gltf-model="#desk"></a-entity>
-  <a-entity bus13 gltf-model="#desk"></a-entity>
-  <a-entity bus14 gltf-model="#desk"></a-entity>
-  <a-entity bus15 gltf-model="#desk"></a-entity>
+ <!--      <a-plane position="-3 0 0" rotation="0 90 0" width="32" height="5" material="shader: flat" color="#24340e"></a-plane>
+      <a-plane position="-3 0 -2" rotation="0 0 0" width="32" height="5" material="shader: flat" color="#24340e"></a-plane>
+      <a-plane position="13 0 0" rotation="0 270 0" width="32" height="5" material="shader: flat" color="#24340e"></a-plane> -->
+      <a-plane floor position="12 -1 12" rotation="-90 0 0" width="32" height="32" material="shader: flat" color="#acba13"></a-plane>
+      <a-plane roof position="12 2 12" rotation="90 0 0" width="32" height="32" material="shader: flat" color="#acba13"></a-plane>
+      <a-image src="#my-image" id="position=" -1 10.21"></a-image>
+      <a-sky color="#24340e"></a-sky>
+      <a-entity id='cameraWrapper' position="4 1 11">
+        <a-box screen position=".05 -1 -1.15" scale=".5 .5 .5" opacity=".1"></a-box>
+        <a-box screen position=".05 -1 0" scale=".5 .5 .5" opacity=".1"></a-box>
 
-     <a-plane position="-3 0 0" rotation="0 90 0" width="32" height="5" material="shader: flat" color="#24340e"></a-plane>
-  <a-plane position="12 -1 12" rotation="-90 0 0" width="32" height="32" material="shader: flat" color="#acba13"></a-plane>
+        <a-camera id='camera'>
+          <a-cursor>
+          </a-cursor>
+        </a-camera>    
+      </a-entity> 
 
-
-  <a-image src="#my-image" position="4 -1 10.21"></a-image>
-
-      <a-sky color="#fff54b"></a-sky>
-      <!-- <a-entity gltf-model="#sce"></a-entity>
-      <a-entity gltf-model="#bar"></a-entity>
-      <a-entity gltf-model="#buc"></a-entity>
-            <a-entity gltf-model="#bus"></a-entity>
-
-      <a-box dynamic-body color="#D2B48C" position="2 0 0" scale="1 .5f 1"></a-box>
-      <a-entity>  
-        <a-entity  geometry="primitive:box; width:1; height:1; depth:1;" material="color:red;" position="2 0.5 -3" rotation="0 45 0" event-set__makevisible="_event: mouseenter; visible: true"></a-entity>
-        <a-animation attribute="rotation"
-          dur="10000"
-          fill="forwards"
-          to="0 360 0"
-          repeat="indefinite">       
-        </a-animation>
-      </a-entity>
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"
-             event-set__enter="_event: mouseenter; color: #000000"
-             event-set__leave="_event: mouseleave; color: #4CC3D9"></a-box>       -->
-     <a-entity id='cameraWrapper' position="4 1 11">
-         <a-camera>
-        <a-cursor>
-        </a-cursor>
-      </a-camera>            
     </a-scene>
   </body>
 </html>
