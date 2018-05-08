@@ -1,7 +1,7 @@
 var dataFile = [];
 var xmlhttp = new XMLHttpRequest();
 var url = "names.json";
-
+var size = 16;
 xmlhttp.onreadystatechange = function() {
  if (this.readyState == 4 && this.status == 200) {
           var myArr = JSON.parse(this.responseText);
@@ -38,8 +38,11 @@ function getNames (data) {
           var dist = Math.sqrt( Math.pow(camPos.x-tarPos.x,2)+ Math.pow(camPos.y-tarPos.y,2)+ Math.pow(camPos.z-tarPos.z,2));
         //var dist = ( Math.sqrt( Math.pow(camPos.x-tarPos.x,2)+ Math.pow(camPos.y-tarPos.y,2)+ Math.pow(camPos.z-tarPos.z,2)) - 0) / (1 - 0);
           if (dist < 0.1 || dist ==0) {
+            clearInterval(sizeTimer);
             console.log("FRACK YEAH");
-            createDesks(2);
+            size /= 2;
+            createDesks();
+            cam.setAttribute("position",{x: (size*3)/2-1.5, y: 1, z: (size*5)/2+1.5});
             return;
           }
           var dist = 0.01;
@@ -54,7 +57,7 @@ function getNames (data) {
 
 }
 
-function createDesks (size) {
+function createDesks () {
   var sceneEl = document.querySelector('a-scene');
 
   var player = document.querySelector('#cameraWrapper');
@@ -68,7 +71,7 @@ function createDesks (size) {
   }
   var ind = 0;  
   var deskPar = document.querySelector('#deskPar');
-  if (deskPar == null) {
+  if (deskPar != null) {
      sceneEl.removeChild(deskPar);
   }
     deskPar = document.createElement('a-entity');
@@ -94,9 +97,9 @@ function createDesks (size) {
     modelEnt.setAttribute('position', {x: (i%size)*3, y: -1, z: Math.floor(i/size)%size*5});
     deskPar.appendChild(modelEnt);
     modelEnt.appendChild(nameTag);
-    AFRAME.registerComponent('modely'+i, {
-      init: function () {
-        var targetEl = this.el; 
-    }
-  });
+  //   AFRAME.registerComponent('modely'+i, {
+  //     init: function () {
+  //       var targetEl = this.el; 
+  //   }
+  // });
 }}
