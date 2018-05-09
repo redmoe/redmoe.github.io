@@ -42,8 +42,9 @@ function getNames (data) {
           var tarPos = targetEl.getAttribute("position");
           var dist = Math.sqrt( Math.pow(camPos.x-tarPos.x,2)+ Math.pow(camPos.y-tarPos.y,2)+ Math.pow(camPos.z-tarPos.z,2));
         //var dist = ( Math.sqrt( Math.pow(camPos.x-tarPos.x,2)+ Math.pow(camPos.y-tarPos.y,2)+ Math.pow(camPos.z-tarPos.z,2)) - 0) / (1 - 0);
-        
-          if (dist < 0.1 || dist ==0) {
+                    console.log(dist);
+
+          if (dist < .5 || dist ==0) {
             clearInterval(sizeTimer);
             sizeTimer = null;
             console.log(dist);
@@ -53,10 +54,13 @@ function getNames (data) {
             var wrap = document.querySelector('#cameraWrapper');
             cam.setAttribute("position",{x: 0, y: 0, z: 0});
             wrap.setAttribute("position",{x: (size*3)/2-1.5, y: 1, z: (size*5)/2+1.5});
-            console.log(size);
+                            var screen = document.querySelector('#screen');
+
             if (size < 1) {
-                var screen = document.querySelector('#screen');
             screen.setAttribute("opacity",0);
+            }
+            else if (size==1) {
+              screen.setAttribute('position',{x: -1.45, y: -1, z: -3.5});
             }
             return;
           }
