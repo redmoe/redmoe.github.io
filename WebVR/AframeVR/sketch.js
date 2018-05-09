@@ -20,11 +20,17 @@ function getNames (data) {
         var sizeTimer = null;
         var targetEl = this.el; 
         targetEl.addEventListener('mouseleave', function(e) {
+          if (size < 1) {
+            return;
+          }          
           clearInterval(sizeTimer);
           console.log('mouse up');
           sizeTimer = null;
         }); 
         targetEl.addEventListener('mouseenter', function(e) {
+          if (size < 1) {
+            return;
+          }
           sizeTimer = setInterval(function(){   
             moveTowards();
           }, 1);
@@ -34,23 +40,35 @@ function getNames (data) {
           var cam = document.querySelector('#camera');
           var camPos = cam.getAttribute("position");
           var tarPos = targetEl.getAttribute("position");
-          var dist = 0.01;
           var dist = Math.sqrt( Math.pow(camPos.x-tarPos.x,2)+ Math.pow(camPos.y-tarPos.y,2)+ Math.pow(camPos.z-tarPos.z,2));
         //var dist = ( Math.sqrt( Math.pow(camPos.x-tarPos.x,2)+ Math.pow(camPos.y-tarPos.y,2)+ Math.pow(camPos.z-tarPos.z,2)) - 0) / (1 - 0);
+        
           if (dist < 0.1 || dist ==0) {
             clearInterval(sizeTimer);
+            sizeTimer = null;
+            console.log(dist);
             console.log("FRACK YEAH");
             size /= 2;
             createDesks();
-            cam.setAttribute("position",{x: (size*3)/2-1.5, y: 1, z: (size*5)/2+1.5});
+            var wrap = document.querySelector('#cameraWrapper');
+            cam.setAttribute("position",{x: 0, y: 0, z: 0});
+            wrap.setAttribute("position",{x: (size*3)/2-1.5, y: 1, z: (size*5)/2+1.5});
+            console.log(size);
+            if (size < 1) {
+                var screen = document.querySelector('#screen');
+            screen.setAttribute("opacity",0);
+            }
             return;
           }
-          var dist = 0.01;
-          camPos.x = camPos.x+(tarPos.x -camPos.x) * dist;
-          camPos.y = camPos.y+(tarPos.y -camPos.y) * dist;
-          camPos.z = camPos.z+(tarPos.z -camPos.z) * dist;
-        //  console.log(Math.sqrt( Math.pow(camPos.x-tarPos.x,2)+ Math.pow(camPos.y-tarPos.y,2)+ Math.pow(camPos.z-tarPos.z,2)));
-          cam.setAttribute("position",camPos);
+          else if (sizeTimer) {
+            var dist = 0.01;
+            camPos.x = camPos.x+(tarPos.x -camPos.x) * dist;
+            camPos.y = camPos.y+(tarPos.y -camPos.y) * dist;
+            camPos.z = camPos.z+(tarPos.z -camPos.z) * dist;
+          //  console.log(Math.sqrt( Math.pow(camPos.x-tarPos.x,2)+ Math.pow(camPos.y-tarPos.y,2)+ Math.pow(camPos.z-tarPos.z,2)));
+            cam.setAttribute("position",camPos);
+          }
+
         }
       }
   }); 
@@ -85,21 +103,23 @@ function createDesks () {
 
 
   // }
-
-  for (var i = 0; i < size * size; i++) {
-    var modelEnt = document.createElement('a-entity');
-    var nameTag = document.createElement('a-text');
-    modelEnt.setAttribute("value",dataFile.Charcthers[i%dataFile.Charcthers.length].name);
-    modelEnt.setAttribute("id","modely"+i);
-    modelEnt.setAttribute("modely"+i);
-    modelEnt.setAttribute("gltf-model","#desk");
-    modelEnt.setAttribute("material","flatShading:true");
-    modelEnt.setAttribute('position', {x: (i%size)*3, y: -1, z: Math.floor(i/size)%size*5});
-    deskPar.appendChild(modelEnt);
-    modelEnt.appendChild(nameTag);
-  //   AFRAME.registerComponent('modely'+i, {
-  //     init: function () {
-  //       var targetEl = this.el; 
-  //   }
-  // });
-}}
+  if (size >= 1) {
+      for (var i = 0; i < size * size; i++) {
+        var modelEnt = document.createElement('a-entity');
+        var nameTag = document.createElement('a-text');
+        modelEnt.setAttribute("value",dataFile.Charcthers[i%dataFile.Charcthers.length].name);
+        modelEnt.setAttribute("id","modely"+i);
+        modelEnt.setAttribute("modely"+i);
+        modelEnt.setAttribute("gltf-model","#desk");
+        modelEnt.setAttribute("material","flatShading:true");
+        modelEnt.setAttribute('position', {x: (i%size)*3, y: -1, z: Math.floor(i/size)%size*5});
+        deskPar.appendChild(modelEnt);
+        modelEnt.appendChild(nameTag);
+      //   AFRAME.registerComponent('modely'+i, {
+      //     init: function () {
+      //       var targetEl = this.el; 
+      //   }
+      // });
+    }
+  }
+}
