@@ -1,5 +1,5 @@
 
-$ npm install oauth;
+// $ npm install oauth;
 var dataFile = [];
 var xmlhttp = new XMLHttpRequest();
 var url = "names.json";
@@ -174,25 +174,25 @@ function createDesks () {
 // `npm install oauth` to satisfy
 // website: https://github.com/ciaranj/node-oauth
 
-var KEY = "2afbaa699b1c4f53875433fd971e398d"
-var SECRET = "a9ad9cee80614dafa5446e8f9bb51405"
+// var KEY = "2afbaa699b1c4f53875433fd971e398d"
+// var SECRET = "a9ad9cee80614dafa5446e8f9bb51405"
 
-var oauth = new OAuth.OAuth(
-  'http://api.thenounproject.com',
-  'http://api.thenounproject.com',
-  KEY,
-  SECRET,
-  '1.0',
-  null,
-  'HMAC-SHA1'
-)
-oauth.get(
-  'http://api.thenounproject.com/icon/6324',
-  null,
-  null,
-  function (e, data, res){
-    console.log("SOMETHING");
-    if (e) console.error(e)
-    console.log(require('util').inspect(data))
-  }
-)
+// var oauth = new OAuth.OAuth(
+//   'http://api.thenounproject.com',
+//   'http://api.thenounproject.com',
+//   KEY,
+//   SECRET,
+//   '1.0',
+//   null,
+//   'HMAC-SHA1'
+// )
+// oauth.get(
+//   'http://api.thenounproject.com/icon/6324',
+//   null,
+//   null,
+//   function (e, data, res){
+//     console.log("SOMETHING");
+//     if (e) console.error(e)
+//     console.log(require('util').inspect(data))
+//   }
+// )
