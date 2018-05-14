@@ -1,23 +1,28 @@
-
-// $ npm install oauth;
 var dataFile = [];
 var xmlhttp = new XMLHttpRequest();
-var url = "names.json";
+var url = "data.json";
 var size = 16;
+var currentDesk = 0;
+var xSize = 3;
+var zSize = 4;
+var currentLevel = 0;
 xmlhttp.onreadystatechange = function() {
  if (this.readyState == 4 && this.status == 200) {
-          var myArr = JSON.parse(this.responseText);
-          getNames(myArr);
-
+      var myArr = JSON.parse(this.responseText);
+      getNames(myArr);
     }
 };
 xmlhttp.open("GET", url, true);
 xmlhttp.send();
-
+function findPos (comp) {
+  var truePos = {x:comp.parentElement.getAttribute("position").x+ 1.5, y: 0, z: comp.parentElement.getAttribute("position").z-2.5}
+  return truePos;
+}
 function getNames (data) {
     dataFile = data;
-    createDesks(6);
-     AFRAME.registerComponent('screen', {
+    console.log(data.levels[0].size);
+    createDesks(data.levels[0]);
+    AFRAME.registerComponent('screen', {
       init: function () {
         var sizeTimer = null;
         var targetEl = this.el; 
@@ -49,8 +54,6 @@ function getNames (data) {
           if (dist < .5 || dist ==0) {
             clearInterval(sizeTimer);
             sizeTimer = null;
-            //console.log(dist);
-            //console.log("FRACK YEAH");
             size /= 2;
             createDesks();
             var wrap = document.querySelector('#cameraWrapper');
@@ -81,17 +84,17 @@ function getNames (data) {
 
 }
 
-function createDesks () {
+function createDesks (dat) {
+  size = dat.size;
   var sceneEl = document.querySelector('a-scene');
 
   var player = document.querySelector('#cameraWrapper');
-  player.setAttribute("position",{x: (size*3)/2+1.5, y: 1, z: (size*5)/2-1.25});
   for (var r = 0; r < 2; r++) {
         var roof = sceneEl.querySelector('#roof'+r);
        // console.log(roof);
-        roof.setAttribute("position",{x: (size*3)/2, y: (r*3)-1, z: (size*5)/2-3});
-        roof.setAttribute("width",size*3);
-        roof.setAttribute("height",size*5);
+        roof.setAttribute("position",{x: (size*xSize)/2, y: (r*xSize)-1, z: (size*zSize)/2-3});
+        roof.setAttribute("width",size*xSize);
+        roof.setAttribute("height",size*zSize);
   }
   var ind = 0;  
   var deskPar = document.querySelector('#deskPar');
@@ -128,7 +131,7 @@ function createDesks () {
         //modelEnt.setAttribute("obj-model","obj:#desk-obj; mtl:#desk-mtl");
 
         modelEnt.setAttribute("material","flatShading:true");
-        modelEnt.setAttribute('position', {x: (i%size)*3, y: -1, z: Math.floor(i/size)%size*5});
+        modelEnt.setAttribute('position', {x: (i%size)*xSize, y: -1, z: Math.floor(i/size)%size*zSize});
         deskPar.appendChild(modelEnt);
         //modelEnt.appendChild(nameTag);
       //   AFRAME.registerComponent('modely'+i, {
@@ -136,35 +139,99 @@ function createDesks () {
       //       var targetEl = this.el; 
       //   }{x: , y: , z: }
       // });
+  if (dat.desks[i]!= null) {
+    if (dat.desks[i].c != 0) {
       var comp = document.createElement('a-entity');
-      var rand = Math.random();
-      if (rand < .3) {
-        comp.setAttribute("gltf-model","#computer1");
-      }
-      else if (rand < .6) {
-        comp.setAttribute("gltf-model","#computer2");
-      }
-      else {
-        comp.setAttribute("gltf-model","#computer3");
-      }
-      //comp.setAttribute("geometry","box");
-            //comp.setAttribute("material","color:red");
+      comp.setAttribute('id',"com"+i);
+      //comp.setAttribute('tel',dat.desks[i].t);
+      modelEnt.appendChild(comp);
+      comp.setAttribute("position",{x: 1.25, y: 0.75, z: -2});
 
+      comp.setAttribute("gltf-model","#computer"+dat.desks[i].c);
       comp.addEventListener('mouseenter', function(e) {
-        ico.setAttribute("material","color:#fff54b");
-        ico.setAttribute("scale",{x: 0.01, y: 0.01, z:0.01});
+               var truePos = findPos (comp);
+
+        var xDis = Math.pow(player.getAttribute("position").x-truePos.x,2);
+        var zDis = Math.pow(player.getAttribute("position").z-truePos.z,2); 
+
+        if (xDis < 3 || zDis < 5)
+          {
+            ico.setAttribute("material","color:#fff54b");
+            ico.setAttribute("scale",{x: 0.015, y: 0.015, z:0.015});
+                              ico.setAttribute("geometry","radius-inner:0.8");
+
+        }
+        else {
+          ico.setAttribute("material","color:#acba13");
+          
+                  ico.setAttribute("scale",{x: 0.003, y: 0.003, z:0.003});
+
+                  ico.setAttribute("geometry","radius-inner:0");
+
+        }
+
+
       });
       comp.addEventListener('mouseleave', function(e) {
         ico.setAttribute("material","color:#ffae72");
         ico.setAttribute("scale",{x: 0.003, y: 0.003, z:0.003});
-      });      
-      comp.setAttribute("position",{x: 1.25, y: 0.75, z: -2});
-      modelEnt.appendChild(comp);
-      console.log(i);
+                  ico.setAttribute("geometry","radius-inner:0.8");
 
-      comp.addEventListener('mousedown', function(e) {
-          player.setAttribute("position",{x: comp.parentElement.getAttribute("position").x+1.5, y: 1, z:comp.parentElement.getAttribute("position").z-1});
-      });
+      });      
+
+     // console.log(i);
+     var tel = dat.desks[i].t;
+     var idf = i;
+      comp.addEventListener('mousedown',function(e) {
+       var truePos = findPos (comp);
+        if (ico.getAttribute("material").color == '#fff54b') {
+           if (currentDesk == idf) {
+              var tel = dat.desks.findIndex(function(element,index) {
+                return element.c == dat.desks[idf].c && index != idf;
+              });
+              var telf = document.querySelector('#com'+tel);
+              sizeTimer = setInterval(function(){   
+                moveTowards();
+              }, 1);
+             }
+             else {
+              player.setAttribute("position",{x: truePos.x, y: 1, z:truePos.z+1});
+              currentDesk=idf;
+            }
+          function moveTowards () {
+              var camPos = player.getAttribute("position");
+              var dist = 0.01;
+              camPos.x = camPos.x+(truePos.x -camPos.x) * dist;
+              camPos.y = camPos.y+(truePos.y -camPos.y) * dist;
+              camPos.z = camPos.z+(truePos.z -camPos.z) * dist;
+              player.setAttribute("position",camPos);
+              var dis = ( Math.sqrt( Math.pow(camPos.x-truePos.x,2)+ Math.pow(camPos.y-truePos.y,2)+ Math.pow(camPos.z-truePos.z,2)) - 0) / (1 - 0);
+              if (dis < .2) {
+                clearInterval(sizeTimer);
+                  sizeTimer = null;
+                  console.log(dat);
+                if (dat.desks[idf].end != null) {
+                  currentLevel++;
+                  createDesks(dataFile.levels[currentLevel]);
+                }
+                else {
+                  player.setAttribute("position",{x: telf.parentElement.getAttribute("position").x+1.5, y: 1, z:telf.parentElement.getAttribute("position").z-1});
+                  currentDesk=tel;
+                }
+           
+              }
+            } 
+         }
+        });
+        }
+        if (dat.desks[i].star != null) {
+          console.log(i);
+          console.log("FUCK");
+          player.setAttribute("position",{x: 1.5+(i%size)*xSize,y: 1,z:Math.floor(i/size)%size*zSize-1.5});
+          currentDesk=i;
+        }
+        }
+
       }());  
     }
   }
