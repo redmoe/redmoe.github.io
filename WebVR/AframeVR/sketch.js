@@ -103,13 +103,12 @@ function createDesks (dat) {
     deskPar = document.createElement('a-entity');
     deskPar.setAttribute("id","deskPar");
     sceneEl.appendChild(deskPar);
+
   // }
   // else {
   //       sceneEl.removeChild(deskPar.parentElement);
   //       deskPar = document.createElement('a-entity');
   //           deskPar.setAttribute("id","deskPar");
-
-
 
 
   // }
@@ -171,7 +170,7 @@ function createDesks (dat) {
 
         console.log("x" +xDis);
         console.log("z"+zDis);
-        if ((xDis <= 3 && zDis <= 2) || (xDis <= 2 && zDis <= 5))
+        if ((xDis <= 3 && zDis <= 2) || (xDis <= 2 && zDis <= 6))
           {
             ico.setAttribute("material","color:#fff54b");
             ico.setAttribute("scale",{x: 0.015, y: 0.015, z:0.015});
@@ -201,12 +200,14 @@ function createDesks (dat) {
      var idf = i;
       comp.addEventListener('mousedown',function(e) {
        var truePos = findPos (comp);
-        if (ico.getAttribute("material").color == '#fff54b') {
+        if (ico.getAttribute("material").color == '#fff54b' && currentlyTranisitioning == false) {
+
            if (currentDesk == idf) {
               var tel = dat.desks.findIndex(function(element,index) {
                 return element.c == dat.desks[idf].c && index != idf;
               });
               var telf = document.querySelector('#com'+tel);
+              currentlyTranisitioning=true;
               sizeTimer = setInterval(function(){   
                 moveTowards();
               }, 1);
@@ -235,7 +236,7 @@ function createDesks (dat) {
                   player.setAttribute("position",{x: telf.parentElement.getAttribute("position").x+1.5, y: 1, z:telf.parentElement.getAttribute("position").z-1});
                   currentDesk=tel;
                 }
-           
+           currentlyTranisitioning=false;
               }
             } 
          }
@@ -250,7 +251,22 @@ function createDesks (dat) {
       }());  
     }
   }
+  else {
+    console.log("HHEEYYSS");
+        var roof0 = document.querySelector('#roof0');
+        roof0.setAttribute("width",3);
+        roof0.setAttribute("height",3);
+        roof0.setAttribute("position",{x:0,y:-1,z:0});
+        var roof1 = document.querySelector('#roof1');
+        roof1.setAttribute("width",3);
+        roof1.setAttribute("height",3);
+        roof1.setAttribute("position",{x:0,y:2,z:0});
+        var intro = document.querySelector('#introStuff');
+        intro.setAttribute("position",{x:0,y:1,z:-1.5});
+        player.setAttribute("position",{x:0,y:1,z:0});
+    }
 }
+
 
 // var OAuth = require('oauth')
 // `npm install oauth` to satisfy
@@ -278,3 +294,4 @@ function createDesks (dat) {
 //     console.log(require('util').inspect(data))
 //   }
 // )
+var currentlyTranisitioning = false;
