@@ -20,8 +20,7 @@ function findPos (comp) {
 }
 function getNames (data) {
     dataFile = data;
-    console.log(data.levels[0].size);
-    createDesks(data.levels[0]);
+    createDesks(data.levels[currentLevel]);
     AFRAME.registerComponent('screen', {
       init: function () {
         var sizeTimer = null;
@@ -140,21 +139,39 @@ function createDesks (dat) {
       //   }{x: , y: , z: }
       // });
   if (dat.desks[i]!= null) {
-    if (dat.desks[i].c != 0) {
-      var comp = document.createElement('a-entity');
+    if (dat.desks[i].c != null) {
+      var comp = document.createElement('a-entity');      
+      modelEnt.appendChild(comp);
+      if (dat.desks[i].c != 0) {
+        comp.setAttribute("gltf-model","#computer"+dat.desks[i].c);
+              comp.setAttribute("position",{x: 1.25, y: 0.75, z: -2});
+
+      }
+      else {
+        console.log("FFF");
+        comp.setAttribute("material","src:#image");
+        comp.setAttribute("geometry","primitive: plane;");
+
+        comp.setAttribute("rotation",{x: -90,y:0,z:0})
+        comp.setAttribute("position",{x: 1.5,y:.76,z:-2.3})
+
+      }
       comp.setAttribute('id',"com"+i);
       //comp.setAttribute('tel',dat.desks[i].t);
-      modelEnt.appendChild(comp);
-      comp.setAttribute("position",{x: 1.25, y: 0.75, z: -2});
 
-      comp.setAttribute("gltf-model","#computer"+dat.desks[i].c);
+
       comp.addEventListener('mouseenter', function(e) {
                var truePos = findPos (comp);
 
-        var xDis = Math.pow(player.getAttribute("position").x-truePos.x,2);
-        var zDis = Math.pow(player.getAttribute("position").z-truePos.z,2); 
+        var xDis = Math.abs(player.getAttribute("position").x-truePos.x,2);
+        var zDis = Math.abs(player.getAttribute("position").z-truePos.z,2); 
+              //  console.log(player.getAttribute("position").z);
+              //  console.log(truePos.z);
 
-        if (xDis < 3 || zDis < 5)
+
+        console.log("x" +xDis);
+        console.log("z"+zDis);
+        if ((xDis <= 3 && zDis <= 2) || (xDis <= 2 && zDis <= 5))
           {
             ico.setAttribute("material","color:#fff54b");
             ico.setAttribute("scale",{x: 0.015, y: 0.015, z:0.015});
@@ -225,8 +242,6 @@ function createDesks (dat) {
         });
         }
         if (dat.desks[i].star != null) {
-          console.log(i);
-          console.log("FUCK");
           player.setAttribute("position",{x: 1.5+(i%size)*xSize,y: 1,z:Math.floor(i/size)%size*zSize-1.5});
           currentDesk=i;
         }
