@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>Cat hat mat</title>
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-box material="color: #ffae72; shader: flat;" position="0 .5 -3" id="cat"></a-box>
+      <a-plane rotation="-90 0 0" width="10" height="10" material="shader: flat" color="#acba13"></a-plane>   
+      <a-camera position="0 1 0 ">
+        <a-cursor></a-cursor>
+      </a-entity>
+    </a-scene>
+    <script> 
+        var catObject = document.querySelector('#cat');
+        catObject.setAttribute('position',{x: 0, y: .5, z: -3});
+        catObject.setAttribute('material','flatShading:true; color:#fff54b');
+
+        catObject.addEventListener('mouseenter', function(e) { 
+            catObject.setAttribute("width",3);
+            console.log(e);
+        });
+
+        catObject.addEventListener('mouseleave', function(e) { 
+            catObject.setAttribute("width",1 );
+        });
+    </script>    
+  </body>
+</html>
