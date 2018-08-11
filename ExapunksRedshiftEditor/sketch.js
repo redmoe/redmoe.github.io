@@ -4,7 +4,7 @@ var arrayPos = [];
 var currentlySelectedPoint=false;
 var erasing;
 function mouseClicked() {	
-	console.log(currentlySelectedPoint);
+	logToData ();
 	if (currentlySelectedPoint==false) {
 		drawNew();
 	}
