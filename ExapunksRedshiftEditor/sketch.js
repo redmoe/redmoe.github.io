@@ -27,9 +27,15 @@ function setup() {
 function draw () {
 	noStroke();
 	background(0);
+	textSize(16);
 	fill('#ffffff');
-	textSize(32);
-	text("Left click to draw\nDATA is in the console log",0,boardSize*blockSize);
+
+	rect(0,boardSize*blockSize,blockSize*boardSize,blockSize);
+		fill(0);
+	text("Left click to draw\nDATA is in the console log",0,boardSize*blockSize+blockSize/2);
+		
+				fill('#ffffff');
+
 	for (var i = 0; i < arrayPos.length; i++) {
 		if (arrayPos[i] == 1) {
 			rect(Math.floor(i%10)*blockSize,Math.floor((i/10)%10)*blockSize,blockSize,blockSize);
