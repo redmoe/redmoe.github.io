@@ -4,13 +4,13 @@ var arrayPos = [];
 var currentlySelectedPoint=false;
 var erasing;
 function mouseClicked() {	
-	logToData ();
 	if (currentlySelectedPoint==false) {
 		drawNew();
 	}
 	else {
 		currentlySelectedPoint=false;
 	}	
+	logToData ();
 }
 function drawNew () {
 	var mouseGridPos = createVector(int(mouseX/blockSize), int(mouseY/blockSize) );
