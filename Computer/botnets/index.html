@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" context="width=device-width">
+	<title>Botnets</title>
+</head>
+<body>
+	<div id="app">
+		<h1>BOTNET</h1>
+		<div>{{title}}</div>
+		<div>{{totalPower}}</div>
+		<div>{{cash}}</div>		
+<!-- 		<div v-for='(stats,index) in stat'>{{stats}}</div>
+ -->
+		<div v-for='(item,index) in upgrades'>
+			<div>{{item.name}} {{stat[item.id]}}</div>
+			<button @mouseover="UpdateImage(index)" v-on:click='Upgrade(item,index)' :disabled="cash<item.cost" :class="{disabledButton:cash<item.cost}">
+			${{item.cost}} Add more {{item.name}}
+			</button>
+		</div>
+
+		<div v-for="image in upgrades" :key="image.id">
+		</div>
+		<img v-bind:src="image" height="100" width="100" align="right">		
+		<li v-for="bot in bots">{{bot.telemetry}}		<!-- <progress :value=bot.progress max=100> --></progress>
+</li>
+		<button v-if="!searching" @click='Search'>Find vulnerable computers</button>
+
+		<computer v-for="not in nots"></computer>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>	
+	<script src="main.js"></script>
+	
+</body>
+</html>
