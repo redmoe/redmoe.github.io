@@ -1,8 +1,6 @@
 var paddle1;
 var paddle2;
 
-var border = 20;
-
 var score1 = 0;
 var score2 = 0;
 
@@ -28,7 +26,7 @@ function Ball() {
 			this.angle = PI;
 			this.Reset();
 		}
-		if (this.y - (this.diam / 2) < border || this.y + (this.diam / 2) > height - border) {
+		if (this.y  -(this.diam / 2) < border || this.y + (this.diam / 2) > height) {
 			this.angle = -this.angle;
 		}
 		this.x += cos(this.angle) * this.speed;

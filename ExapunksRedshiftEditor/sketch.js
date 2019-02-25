@@ -4,13 +4,13 @@ var arrayPos = [];
 var currentlySelectedPoint=false;
 var erasing;
 function mouseClicked() {	
-	logToData ();
 	if (currentlySelectedPoint==false) {
 		drawNew();
 	}
 	else {
 		currentlySelectedPoint=false;
 	}	
+	logToData ();
 }
 function drawNew () {
 	var mouseGridPos = createVector(int(mouseX/blockSize), int(mouseY/blockSize) );
@@ -26,6 +26,7 @@ function drawNew () {
 }
 function mouseRelease() {
 	currentlySelectedPoint=false;
+	logToData ();
 }
 
 function collisionDetection(newPos) {
@@ -70,7 +71,7 @@ function draw () {
 	fill('#ffffff');
 
 	rect(0,boardSize*blockSize,blockSize*boardSize,blockSize);
-		fill(0);
+	fill(0);
 	text("Left click/drag to draw\nDATA is in the console log",0,boardSize*blockSize+blockSize/2);
 		
 				fill('#ffffff');

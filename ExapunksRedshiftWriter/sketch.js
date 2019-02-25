@@ -1,38 +1,33 @@
+//paste you text here 
 var PasteText = "Game Controls x to fire dpad to move";
-//paste you text here like
-//
+//toggle wrapping
+var wrapping = false;
+//the max width of your text if wrapping is false
+var spriteWidth = 12;
+//clumps two keyCodes together to shorten the Data length. Requires a Swiz to unpack
+var condense = false;
 
 function setup () {
 	var DataString = []
 	PasteText = PasteText.toLowerCase();
-	for (var i = 0; i < PasteText.length; i++) {
-		if (PasteText[i]==".") {
-			DataString.push(39);
-		}
-		else if (PasteText[i]=="?") {
-			DataString.push(38);
-		}
-		else if (PasteText[i]=="!") {
-			DataString.push(37);
-		}
-		else if (PasteText[i]==" ") {
-			DataString.push(0);
-		}		
-		else if (PasteText[i]== "/") {
-			DataString.push(40);						 
-		}
-		else if (isNaN(PasteText[i])) {
-			DataString.push(PasteText.charCodeAt(i)-96);
-		}
-		else {
-			DataString.push(PasteText.charCodeAt(i)-21);
-		}
-	
-	}
+	PasteText = PasteText.split(" ")
+
 	var completeData = "DATA";
 	var lineLength = 20;
+	var wordLength = 0;
 	for (var c = 0; c <DataString.length; c++) {
+		if (lineLength - DataString[c].length <= lineLength) {
+			for (var m = 0; m < lineLength; m++) {
+				completeData+=" 0"
+			}
+			lineLength = 20;
+		}
+		Encode();
+
 		if (lineLength < DataString[c].toString().length + 1) {
+			// if (DataString[c] != 0) {
+			// 	DataString[c]
+			// }
 			lineLength = 20;
 			completeData += "\nDATA";
 		}
@@ -41,4 +36,31 @@ function setup () {
 		
 	}
 	console.log(completeData);
+}
+
+function Encode (stringToDecode) {
+		for (var i = 0; i < stringToDecode.length; i++) {
+			if (PasteText[i]==".") {
+				stringToDecode.push(39);
+			}
+			else if (PasteText[i]=="?") {
+				stringToDecode.push(38);
+			}
+			else if (PasteText[i]=="!") {
+				stringToDecode.push(37);
+			}
+			else if (PasteText[i]==" ") {
+				stringToDecode.push(0);
+			}		
+			else if (PasteText[i]== "/") {
+				stringToDecode.push(40);						 
+			}
+			else if (isNaN(PasteText[i])) {
+				stringToDecode.push(PasteText.charCodeAt(i)-96);
+			}
+			else {
+				stringToDecode.push(PasteText.charCodeAt(i)-21);
+			}			
+		}	
+		return stringToDecode;
 }
