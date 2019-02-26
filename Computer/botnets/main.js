@@ -84,7 +84,7 @@
 
 
 
-
+var timeScale = 16;
 Vue.component('computer', {
 	props: {
 		name: {
@@ -111,21 +111,35 @@ Vue.component('computer', {
 			main.ignore(this);
 		},
 		OverloadClick() {
-			main.overload(this);
+		//	console.log("overload");
+			//main.overload(this);
+		},
+		HackComplete() {
+			this.isHacked=true;
+			main.hacking(this);
 		}
-	},//v-if:[hackTime>100]=HackClick'		
+	},	
 	template:
-	`<div v-show:v-if="hackTime<100">
-		{{ip}}
-		<button @click='HackClick'>
-			Begin Hacking!
-		</button>
+
+		// <button @click='HackClick'>
+		// 	Begin Hacking!
+		// </button>
+	`<div>
+		<div v-if="isHackable">
+			{{HackComplete()}}
+		</div>
+		{{telemetry}}
+	
 		<button @click='IgnoreClick'>Ignore!</button>
-		<progress :value=hackTime max=100></progress>
+		<progress v-if="!isHacked" :value=hackTime max=100></progress>
 	</div>`,
 	computed: {
 		telemetry() {
+			//if (this.hackTime>100) console.log("done");
 			return `${this.ip} / ${this.isHacked} / ${this.ram} / ${this.mem}`;
+		},
+		isHackable() {
+			return (this.hackTime>100) && (this.isHacked==false);
 		}
 	}	
 }) 
@@ -138,8 +152,8 @@ var main = new Vue({
 		nots:[],
 		tots:[],
 		stat:{
-			ram:200,
-			mem:200,
+			ram:8,
+			mem:8,
 			ip:127.001
 		},
 		upgrades:[
@@ -164,6 +178,8 @@ var main = new Vue({
 		hacking(arg) {
 			this.bots.push(arg);
 			this.nots.splice( this.nots.indexOf(arg),0);
+			this.tots.splice( this.tots.indexOf(arg),0);
+
 			console.log(arg.ip);
 			this.searching=false;
 		},
@@ -184,8 +200,13 @@ var main = new Vue({
 			///sdocument.getElementById('app').appendChild(document.createTextNode("Water");)
 		 	this.nots.push(0);
 		},
+		debuger() {
+			console.log("debug");
+		},
 		ignore (ele) {
 			this.nots.splice( this.nots.indexOf(ele),1);
+			this.tots.splice( this.tots.indexOf(ele),1);
+
 			console.log("ignored");
 			this.searching=false;
 		},
@@ -193,11 +214,13 @@ var main = new Vue({
 		//	setTimeout(this.update, this.bots.length*64);
 			//console.log('update');
 			this.cash+=this.bots.length;
+			let timeModifer=this.totalRam/timeScale/this.tots.length;
 			this.tots.forEach(function(element) {
-		   		element.hackTime++;
-		   		console.log(element.progress);
+		   		element.hackTime+=timeModifer/element.ram;
+		   		console.log(timeModifer);
 		    });
-		    console.log(this.nots[0]);
+
+		 //   console.log(this.nots[0]);
 
 			// for (this.bots.length)
 			// this.bots.length+=this.bots.length/64
@@ -211,17 +234,25 @@ var main = new Vue({
 		image () {
 			return this.upgrades[this.currentImage].img;
 		},
-		totalPower() {
-		   let totalRam = 0;
-		   let totalMem = 0;
+		totalRam() {
+			let totalRam = this.stat.ram;
 
-		    this.bots.forEach(function(element) {
+			this.bots.forEach(function(element) {
 		   		totalRam+=element.ram;
+		    });
+		    return totalRam;
+		},
+		totalMem() {
+			let totalMem = this.stat.mem;
+	    	this.bots.forEach(function(element) {
 		   		totalMem+=element.mem;
 		    });
-			return `${this.bots.length} / ${totalRam} / ${totalMem}`;
+		    return totalMem;
+		},
+		totalPower() {
+			return `${this.bots.length} / ${this.totalRam} / ${this.totalMem}`;
 		}
 	}	
 }) 
 
-setInterval(main.update, 128);
+setInterval(main.update, timeScale);
