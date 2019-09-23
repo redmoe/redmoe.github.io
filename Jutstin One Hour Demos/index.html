@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+</head>
+<body>
+	<script type="text/javascript">
+		// uses the https://fcc-weather-api.glitch.me/ api to get the temp!
+
+		// require https://cdn.jsdelivr.net/npm/p5@0.7.3/lib/p5.min.js
+
+		var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+	    	targetUrl = 'https://www.metaweather.com/api/location/2459115'
+
+		let weatherJSON;
+
+		async function preload() {
+			const response= await fetch(proxyUrl + targetUrl)
+			  .then(blob => blob.json())
+			  .then(data => {
+			    console.table(data);
+			    return data;
+			  })
+			  .catch(e => {
+			    return e;
+			  });		  
+		  weatherJSON = await response;
+		}
+
+		function setup() {
+		  createCanvas(400, 400);
+		  textAlign(CENTER, CENTER);
+		}
+
+		function draw() {
+		  background(30);
+		  fill(255);
+		  // console.log("hello");
+		  // console.log(weatherJSON);
+		  textSize(40);
+		  if (weatherJSON) {
+		    let temp = floor(weatherJSON.consolidated_weather[0].the_temp);
+		    text(`It is ${temp}°`, 200, 200);
+		  } else {
+		    text("waiting...", 200, 200);
+		  }
+		}
+	</script>
+</body>
+</html>

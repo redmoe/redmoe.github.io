@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" context="width=device-width">
+	<title></title>
+</head>
+<body>
+	<div id="app">
+		<div class="product-image">
+<!-- 			<img v-bind:src="image">
+ -->		</div>
+ <a :href='link'>See a thing</a>
+		<h1>{{product}}</h1>
+		<p v-if="inventory > 10">In Stock</p>
+		<p v-else-if="inventory <= 10 && inventory > 0">Almost of Stock</p>
+		<p v-else>Out of Stock</p>
+		<li v-for="detailr in details">{{detailr}}</li>
+		<div v-for="variant in variants" key="variant.ant">{{variant.vant}}</div>
+	</div>
+	<div class="product-info">
+
+		
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>	
+	<script src="main.js"></script>
+</body>
+</html>
